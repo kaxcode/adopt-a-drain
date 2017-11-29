@@ -1,35 +1,69 @@
-.table
-  .table-row
-    .table-cell.sidebar
-      %h1
-        = image_tag "logos/adopt-a-hydrant.png", :alt => t("titles.main", :thing => t("defaults.thing").titleize), :title => t("titles.main", :thing => t("defaults.thing").titleize)
-      %p.alert-message.block-message#tagline
-        = t("defaults.tagline")
-      #content
-        = render :partial => "layouts/flash", :locals => {:flash => flash}
-        - if signed_in?
-          = render :partial => "sidebar/search"
-        - else
-          = render :partial => "sidebar/combo_form"
-      #logos
-        #col1
-          %a{:href => "http://codeforamerica.org/"}
-            = image_tag "logos/cfa.png", :alt => t("sponsors.cfa"), :title => t("sponsors.cfa")
-          %br
-          %a{:href => "http://bostonbuilt.org/"}
-            = image_tag "logos/bostonbuilt.png", :alt => t("sponsors.built"), :title => t("sponsors.built")
-        #col2
-          %a{:href => "http://www.cityofboston.gov/"}
-            = image_tag "logos/boston.png", :alt => t("sponsors.city"), :title => t("sponsors.city")
-          %p#mayor
-            %a{:href => "http://www.cityofboston.gov/mayor/"}
-              = "#{t("sponsors.mayor.name")},"
-              %em
-                = t("sponsors.mayor.title")
-      #feedback
-        %p
-          %a{:href => URI.escape("mailto:adoptahydrant@cityofboston.gov?subject=#{t("titles.main", :thing => t("defaults.thing").titleize)} - #{t("links.feedback").titleize}")}
-            = t("links.feedback")
-    .table-cell.map-container
+.container-fluid{:class => (signed_in? ? "signed-in" : nil)}
+  .row
+    .sidebar
+      .navbar.navbar-default
+        %a{href: root_url}
+          = image_tag "logos/adopt-a-drain.png", :alt => t("titles.main", :thing => t("defaults.thing").titleize), :title => t("titles.main", :thing => t("defaults.thing").titleize)
+        %button.navbar-toggle{"data-target" => "#bs-example-navbar-collapse-1", "data-toggle" => "collapse", :type => "button"}
+          %span.sr-only Toggle navigation
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+      .sidebar-content
+        -# Corresponds to guideline div below
+        %div.hidden-xs
+          %h3.text-center
+            = t("titles.adopted_tagline", :count => Thing.adopted.count, :things => t("defaults.things"))
+            .small
+              Last updated
+              = local_date(Time.now, '%B %e, %Y')
+          %a.guidelines{:href => "#guidelines", :"data-toggle" => "modal", :"data-target" => "#guidelines"}
+            %button.btn.btn-block.btn-primary#tagline
+              = t("defaults.tagline")
+        #content
+          = render :partial => "layouts/flash", :locals => {:flash => flash}
+          - if signed_in?
+            = render :partial => "sidebar/search"
+          - elsif @reset_password_token.present?
+            = render :partial => 'passwords/edit'
+          - else
+            %iframe{ :width => "100%", :src => "https://www.youtube.com/embed/2edCAYTPrtc?autoplay=0", :frameborder => "0", :allowfullscreen => "allowfullscreen" }
+            = render :partial => "sidebar/search"
+        -# Corresponds to guideline div above
+        %div.hidden.visible-xs-block
+          %a.guidelines{:href => "#guidelines", :"data-toggle" => "modal", :"data-target" => "#guidelines"}
+            %button.btn.btn-block.btn-primary#tagline
+              = t("defaults.tagline")
+        #logos
+          .row
+            .col-xs-4
+
+            .col-xs-4
+
+            .col-xs-4
+
+          .row
+            .col-xs-6
+              %a{:href => "http://codeforhr.org/"}
+                = image_tag "logos/codeforhamptonroads.png", :alt => t("sponsors.built"), :title => t("sponsors.built"), :class => "cfhr"
+            .col-xs-6
+              %a{:href => "http://codeforamerica.org/"}
+                = image_tag "logos/cfa.jpg", :alt => t("sponsors.cfa"), :title => t("sponsors.cfa"), :class => "cfa"
+
+    .col-md-9.map-container
       #map
         &nbsp;
+      #legend
+        .title
+          Legend
+        .show-hide
+          %a#toggleLegend{:href=>"#"}
+            Hide
+  = render :partial => "sidebar/tos"
+  = render :partial => "sidebar/guidelines"
+:javascript
+  $(function() {
+    $('.navbar-toggle').on('click', function(){
+      $('div.sidebar').toggleClass('sidebar-full');
+    });
+  });

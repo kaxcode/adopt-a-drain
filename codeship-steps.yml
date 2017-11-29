@@ -1,0 +1,12 @@
+- type: parallel
+  steps:
+  - name: rubocop
+    service: web
+    command: rubocop
+- name: Push
+  service: app
+  tag: production
+  type: push
+  image_name: registry.heroku.com/norfolkdrains/web
+  registry: registry.heroku.com
+  dockercfg_service: dockercfg_generator

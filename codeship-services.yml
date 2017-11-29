@@ -1,0 +1,15 @@
+app:
+  build:
+    image: registry.heroku.com/norfolkdrains/web
+    dockerfile: Dockerfile
+  cached: true
+  default_cache_branch: "production"
+  encrypted_env_file: deployment.env.encrypted
+
+dockercfg_generator:
+  image: codeship/heroku-dockercfg-generator
+  add_docker: true
+  encrypted_env_file: deployment.env.encrypted
+
+web:
+  build: ./

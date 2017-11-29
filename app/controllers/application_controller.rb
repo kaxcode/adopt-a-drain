@@ -5,7 +5,16 @@ class ApplicationController < ActionController::Base
   before_action :set_flash_from_params
   before_action :set_locale
 
+  force_ssl if: :ssl_configured?
+
 protected
+
+  def require_admin
+    return if user_signed_in? && current_user.admin?
+
+    flash[:error] = 'You must be an admin'
+    redirect_to root_path
+  end
 
   def set_flash_from_params
     params.fetch(:flash, []).each do |key, message|
@@ -14,9 +23,10 @@ protected
   end
 
   def set_locale
-    available_languages = Dir.glob(Rails.root + 'config/locales/??.yml').collect do |file|
-      File.basename(file, '.yml')
-    end
-    I18n.locale = http_accept_language.compatible_language_from(available_languages) || I18n.default_locale
+    I18n.locale = :en
+  end
+
+  def ssl_configured?
+    Rails.env.production?
   end
 end

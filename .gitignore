@@ -21,3 +21,10 @@
 /log/*
 !/log/.keep
 /tmp
+.env
+.DS_Store
+# docker stuff
+*override*
+
+# ignore precompied assets
+public/assets

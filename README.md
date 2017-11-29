@@ -1,39 +1,73 @@
-# Adopt-a-Hydrant
+# Adopt-a-Drain
 
-[![Build Status](http://img.shields.io/travis/codeforamerica/adopt-a-hydrant.svg)][travis]
-[![Dependency Status](http://img.shields.io/gemnasium/codeforamerica/adopt-a-hydrant.svg)][gemnasium]
-[![Coverage Status](http://img.shields.io/coveralls/codeforamerica/adopt-a-hydrant.svg)][coveralls]
+[![Join the chat at https://gitter.im/sfbrigade/adopt-a-drain](https://badges.gitter.im/sfbrigade/adopt-a-drain.svg)](https://gitter.im/sfbrigade/adopt-a-drain?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
-[travis]: http://travis-ci.org/codeforamerica/adopt-a-hydrant
-[gemnasium]: https://gemnasium.com/codeforamerica/adopt-a-hydrant
-[coveralls]: https://coveralls.io/r/codeforamerica/adopt-a-hydrant
+[![Build Status](http://img.shields.io/travis/sfbrigade/adopt-a-drain.svg)][travis]
+[![Dependency Status](http://img.shields.io/gemnasium/sfbrigade/adopt-a-drain.svg)][gemnasium]
+[![Coverage Status](http://img.shields.io/coveralls/sfbrigade/adopt-a-drain.svg)][coveralls]
 
-Claim responsibility for shoveling out a fire hydrant after it snows.
+[travis]: http://travis-ci.org/sfbrigade/adopt-a-drain
+[gemnasium]: https://gemnasium.com/sfbrigade/adopt-a-drain
+[coveralls]: https://coveralls.io/r/sfbrigade/adopt-a-drain
+
+Claim responsibility for cleaning out a storm drain after it rains.
 
 ## Screenshot
-![Adopt-a-Hydrant](https://github.com/codeforamerica/adopt-a-hydrant/raw/master/screenshot.png "Adopt-a-Hydrant")
+![Adopt-a-Drain](/adopt.png "Adopt-a-Drain")
 
 ## Demo
 You can see a running version of the application at
-[http://adopt-a-hydrant.herokuapp.com/][demo].
+[http://adopt-a-drain.herokuapp.com/][demo].
 
-[demo]: http://adopt-a-hydrant.herokuapp.com/
+[demo]: http://adopt-a-drain.herokuapp.com/
 
-## Installation
+
+
+## Docker (our prefered dev and test setup)
+
+
+1. To install Docker locally, pick your OS and follow steps here:
+[Docker Store](https://store.docker.com/search?offering=community&type=edition)
+1. `git clone` this repository, and `cd` to it in your shell
+1. build the adopta image locally, this will take a few min
+    ```bash
+    docker-compose build
+    ```
+1. Setup your docker based postgres database (first time):
+   ```bash
+   docker-compose run --rm web bundle exec rake db:schema:load
+   ```
+1. Load data (first time):
+   ```bash
+   docker-compose run --rm web bundle exec rake data:load_things
+   ```
+   OR: don't load all that data, and load the seed data (first time):
+   ```bash
+   docker-compose run --rm web bundle exec rake db:seed
+   ```
+1. Start the web server:
+   ```bash
+   docker-compose up
+   ```
+1. Visit your website http://localhost:3000 (or the IP of your docker-machine)
+
+## Installation without Docker
 This application requires [Postgres](http://www.postgresql.org/) to be installed
 
-    git clone git://github.com/codeforamerica/adopt-a-hydrant.git
-    cd adopt-a-hydrant
+    git clone git://github.com/code4hr/adopt-a-drain.git
+    cd adopt-a-drain
     bundle install
 
     bundle exec rake db:create
     bundle exec rake db:schema:load
 
+See the [wiki](https://github.com/sfbrigade/adopt-a-drain/wiki/Windows-Development-Environment) for a guide on how to install this application on Windows.
+
 ## Usage
     rails server
 
 ## Seed Data
-    bundle exec rake db:seed
+    bundle exec rake data:load_drains
 
 ## Deploying to Heroku
 A successful deployment to Heroku requires a few setup steps:
@@ -67,7 +101,7 @@ A successful deployment to Heroku requires a few setup steps:
     `heroku run bundle exec rake db:seed`
 
 Keep in mind that the Heroku free Postgres plan only allows up to 10,000 rows,
-so if your city has more than 10,000 fire hydrants (or other thing to be
+so if your city has more than 10,000 fire drains (or other thing to be
 adopted), you will need to upgrade to the $9/month plan.
 
 ### Google Analytics
@@ -78,7 +112,7 @@ variables:
     heroku config:set GOOGLE_ANALYTICS_ID=your_id
     heroku config:set GOOGLE_ANALYTICS_DOMAIN=your_domain_name
 
-An example ID is `UA-12345678-9`, and an example domain is `adoptahydrant.org`.
+An example ID is `UA-12345678-9`, and an example domain is `adoptadrain.org`.
 
 ## Contributing
 In the spirit of [free software][free-sw], **everyone** is encouraged to help
@@ -101,9 +135,9 @@ Here are some ways *you* can contribute:
 * by reviewing patches
 * [financially][]
 
-[locales]: https://github.com/codeforamerica/adopt-a-hydrant/tree/master/config/locales
-[issues]: https://github.com/codeforamerica/adopt-a-hydrant/issues
-[financially]: https://secure.codeforamerica.org/page/contribute
+[locales]: https://github.com/code4hr/adopt-a-drain/tree/master/config/locales
+[issues]: https://github.com/code4hr/adopt-a-drain/issues
+[financially]:
 
 ## Submitting an Issue
 We use the [GitHub issue tracker][issues] to track bugs and features. Before
@@ -128,11 +162,11 @@ Ideally, a bug report should include a pull request with failing specs.
 9. [Submit a pull request.][pr]
 
 [fork]: http://help.github.com/fork-a-repo/
-[branch]: http://learn.github.com/p/branching.html
+[branch]: https://guides.github.com/introduction/flow/
 [pr]: http://help.github.com/send-pull-requests/
 
 ## Supported Ruby Version
-This library aims to support and is [tested against][travis] Ruby version 2.1.2.
+This library aims to support and is [tested against][travis] Ruby version 2.2.2.
 
 If something doesn't work on this version, it should be considered a bug.
 
@@ -147,10 +181,6 @@ timely fashion. If critical issues for a particular implementation exist at the
 time of a major release, support for that Ruby version may be dropped.
 
 ## Copyright
-Copyright (c) 2014 Code for America. See [LICENSE][] for details.
+Copyright (c) 2017 Code for Hampton Roads. See [LICENSE.md](https://github.com/code4hr/adopt-a-drain/blob/master/LICENSE.md) for details.
 
-[license]: https://github.com/codeforamerica/adopt-a-hydrant/blob/master/LICENSE.md
-
-[![Code for America Tracker](http://stats.codeforamerica.org/codeforamerica/adopt-a-hydrant.png)][tracker]
-
-[tracker]: http://stats.codeforamerica.org/projects/adopt-a-hydrant
+[license]: https://github.com/code4hr/adopt-a-drain/blob/master/LICENSE.md

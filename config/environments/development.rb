@@ -1,3 +1,5 @@
+require 'socket'
+
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
@@ -5,6 +7,10 @@ Rails.application.configure do
   # every request. This slows down response time but is perfect for development
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
+
+  # asset host
+  config.action_controller.asset_host = ENV['ASSET_URL']
+  config.action_mailer.asset_host = config.action_controller.asset_host
 
   # Do not eager load code on boot.
   config.eager_load = false
@@ -39,4 +45,8 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+  # For Mailcatcher
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {address: 'localhost', port: 1025}
 end

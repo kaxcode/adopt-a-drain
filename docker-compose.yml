@@ -1,0 +1,37 @@
+version: '3.1'
+
+services:
+    db:
+        image: postgres:9.6
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: Iskids01! 
+            POSTGRES_DB: adopta
+        ports:
+            - "55432:5432" # for local dev access
+        volumes:
+            - postgres:/var/lib/postgresql/data
+    web:
+        build: .
+        entrypoint: /usr/local/bin/docker-entrypoint-dev.sh
+        command: [ "bundle", "exec", "puma", "-b", "tcp://0.0.0.0:3000" ]
+        volumes:
+            - .:/usr/src/app
+            - ./docker-entrypoint-dev.sh:/usr/local/bin/docker-entrypoint-dev.sh
+        ports:
+            - "3000:3000"
+        environment:
+            DB_HOST: db
+            DB_USER: postgres
+            DB_PASSWORD: Iskids01!
+            DB_NAME: adopta
+            RACK_ENV: development
+            RAILS_ENV: development
+            PORT: "3000"
+            ASSET_URL: http://localhost:3000
+        depends_on:
+            - db
+        restart: on-failure
+
+volumes:
+    postgres:

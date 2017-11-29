@@ -13,6 +13,8 @@ class ThingsController < ApplicationController
   def update
     @thing = Thing.find(params[:id])
     if @thing.update_attributes(thing_params)
+      send_adoption_email(@thing.user, @thing) if @thing.adopted?
+
       respond_with @thing
     else
       render(json: {errors: @thing.errors}, status: 500)
@@ -21,7 +23,16 @@ class ThingsController < ApplicationController
 
 private
 
+  def send_adoption_email(user, thing)
+    case user.things.count
+    when 1
+      ThingMailer.first_adoption_confirmation(thing).deliver_later
+    when 2
+      ThingMailer.second_adoption_confirmation(thing).deliver_later
+    end
+  end
+
   def thing_params
-    params.require(:thing).permit(:name, :user_id)
+    params.require(:thing).permit(:adopted_name, :user_id)
   end
 end

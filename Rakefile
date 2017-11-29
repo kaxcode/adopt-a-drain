@@ -3,4 +3,13 @@
 
 require File.expand_path('../config/application', __FILE__)
 
+begin
+  require 'rubocop/rake_task'
+  RuboCop::RakeTask.new
+rescue LoadError
+  puts 'Could not load rubocop'
+end
+
 Rails.application.load_tasks
+
+task default: %i[rubocop test]

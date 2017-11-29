@@ -1,12 +1,3 @@
-html {
-  height: 100%;
-}
-
-body {
-  height: 100%;
-  margin: 0;
-}
-
 h1, h2 {
   text-align: center;
   margin: 20px 0 10px;
@@ -50,8 +41,25 @@ input#user_existing {
 }
 
 form select, button.btn, input[type="submit"].btn {
-  width: 210px;
 }
+
+.btn-primary {
+  color: #ffffff;
+  background-color: #8871B3;
+  border-color: #8871B3;
+}
+
+.btn-secondary {
+  color: #fff;
+  background-color: #396B80;
+  border-color: #2e6da4;
+}
+
+.btn-secondary:hover {
+  color: #fff;
+  background-color: #005596;
+}
+
 
 form input.search-query {
   -moz-border-radius: 14px;
@@ -60,16 +68,6 @@ form input.search-query {
   margin-bottom: 0;
   padding-left: 14px;
   padding-right: 14px;
-  width: 180px;
-}
-
-.sidebar p {
-  padding: 0 20px;
-  margin: 0;
-}
-
-a.btn {
-  width: 188px;
 }
 
 .table {
@@ -102,9 +100,6 @@ a.btn {
 }
 
 .sidebar {
-  width: 250px;
-  border-right: 1px solid #ccc;
-  text-align: center;
 }
 
 .sidebar .control-group {
@@ -112,23 +107,11 @@ a.btn {
 }
 
 .sidebar .form-actions {
-  padding: 17px 20px 10px;
 }
 
 .sidebar p#tagline {
   color: #ffffff;
-  background-color: #c43c35;
-  background-repeat: repeat-x;
-  background-image: -khtml-gradient(linear, left top, left bottom, from(#ee5f5b), to(#c43c35));
-  background-image: -moz-linear-gradient(top, #ee5f5b, #c43c35);
-  background-image: -ms-linear-gradient(top, #ee5f5b, #c43c35);
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ee5f5b), color-stop(100%, #c43c35));
-  background-image: -webkit-linear-gradient(top, #ee5f5b, #c43c35);
-  background-image: -o-linear-gradient(top, #ee5f5b, #c43c35);
-  background-image: linear-gradient(top, #ee5f5b, #c43c35);
-  border-color: #c43c35 #c43c35 #882a25;
-  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ee5f5b', endColorstr='#c43c35', GradientType=0);
+  background-color: #8871B3;
   padding: 10px 20px;
   text-align: center;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
@@ -172,7 +155,7 @@ a.btn {
 }
 
 .map-container {
-  width: auto;
+  padding: 0;
 }
 
 #map {
