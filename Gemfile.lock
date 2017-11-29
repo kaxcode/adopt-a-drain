@@ -242,11 +242,7 @@ GEM
       activemodel
     warden (1.2.7)
       rack (>= 1.0)
-<<<<<<< HEAD
-    webmock (1.22.2)
-=======
     webmock (3.0.1)
->>>>>>> 8996de1ab103f8ef678fb5a19ce094f2822e723e
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
       hashdiff
